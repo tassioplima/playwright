@@ -28,8 +28,8 @@ test('Validate main page amazon', async() =>{
     })
 
     await test.step('',  async () => {
-        await page.waitForSelector('#nav-logo');
-        const logoElement = page.locator('#nav-logo');
+        await page.waitForSelector('#nav-logo-sprites');
+        const logoElement = page.locator('#nav-logo-sprites');
         const searchInput = page.locator('#twotabsearchtextbox');
         const searchButton = page.locator('.nav-search-submit');
 
