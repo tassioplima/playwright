@@ -30,19 +30,13 @@
             name: playwright-report
             path: playwright-report/
             retention-days: 30
-    publish_report:
-      name: Publish HTML Report
-      if: success() || needs.test.result == 'failure'
-      needs:
-        - test
-      runs-on: ubuntu-latest
-      continue-on-error: true
-      env:
-        HTML_REPORT_URL_PATH: reports/${{ github.ref_name }}/${{ github.run_id }}/${{
-          github.run_attempt }}
-      steps:
-        - name: Output Report URL as Workflow Annotation
-          run: >
-            FULL_HTML_REPORT_URL=https://ysfaran.github.io/playwright-gh-actions-gh-pages/$HTML_REPORT_URL_PATH
-  
-            echo "::notice title=📋 Published Playwright Test Report::$FULL_HTML_REPORT_URL"
+        - name: Setup Pages
+          uses: actions/configure-pages@v2
+        - name: Upload artifact
+          uses: actions/upload-pages-artifact@v1
+          with:
+            # Upload entire repository
+            path: test-merge-report-demo/
+        - name: Deploy to GitHub Pages
+          id: deployment
+          uses: actions/deploy-pages@v1
