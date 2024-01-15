@@ -1,5 +1,4 @@
 import {test, expect} from '@playwright/test'
-import exp from 'constants'
 
 test.use({
     locale: 'pt-BR',
