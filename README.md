@@ -25,7 +25,7 @@ Use the [VS Code Extension](https://marketplace.visualstudio.com/items?itemName=
 npx playwright test --ui
 ```
 
-Use the command bellow to run playwright tests
+Use the command below to run playwright tests
 
 ```bash
 npx playwright test
