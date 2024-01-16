@@ -35,6 +35,8 @@ test('Validate main page amazon', async() =>{
         await expect(logoElement).toBeVisible();
         await expect(searchInput).toBeVisible();
         await expect(searchButton).toBeVisible();
+        await page.screenshot({ path: './screenshot.png' });
+
     })
 
 })
