@@ -26,7 +26,7 @@ test('Validate main page amazon', async() =>{
         expect(currentUrl).toBe(url);
     })
 
-    await test.step('',  async () => {
+    await test.step('validate waits and locators',  async () => {
         await page.waitForSelector('#nav-logo-sprites');
         const logoElement = page.locator('#nav-logo-sprites');
         const searchInput = page.locator('#twotabsearchtextbox');
