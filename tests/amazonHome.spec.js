@@ -1,41 +1,58 @@
-import {test, expect} from '@playwright/test'
+// @ts-check
+const { test, expect } = require('@playwright/test');
+const { AmazonHomePage } = require("../pages/homePageAmazon")
+const { ProductPage } = require("../pages/productPageAmazon")
+const { CartPage } = require("../pages/cartPageAmazon")
 
-test.use({
-    locale: 'pt-BR',
-    headless: true
-})
+const homePage = new AmazonHomePage()
+const productPage = new ProductPage()
+const cartPage = new CartPage()
 
-test.beforeEach(async ({page})=> {
-global.page = page
-} ) 
+test(`Successfully Search for ${homePage.ObjectsPage.ProductTarget} on Amazon`, async ({ page }) => {
+  global.page = page
 
-test.afterEach (async ({page})=>{
-    await page.close();
-})
+  await test.step('Navigate to the main screen of amazon.com', async () => {
+    await homePage.navegatTo();
+  })
 
-const url = 'https://www.amazon.es/';
+  await test.step('Main screen of Amazon is displayed', async () => {
+    await homePage.validateHomePage()
+  })
+  
+  await test.step(`Search for the product  ${homePage.ObjectsPage.ProductTarget}`, async () => {
+    await homePage.validateSearchProduct(homePage.ObjectsPage.ProductTarget)
+  })
 
+  await test.step(`Validate the found product`, async () => {
+    await homePage.validateSearchProduct(homePage.ObjectsPage.ProductTarget)
+  })
 
-test('Validate amazon main page', async() =>{
-    await test.step('navigate from main page amazon.com', async () => {
-        await page.goto(url);
-    })
+});
 
-    await test.step('validate url', async () => {
-        const currentUrl = page.url();
-        expect(currentUrl).toBe(url);
-    })
+test('Successfully Add Product to Cart', async ({ page }) => {
+  global.page = page
 
-    await test.step('validate waits and locators',  async () => {
-       await page.waitForSelector('#nav-logo-sprites');
-        const logoElement = page.locator('#nav-logo-sprites');
-        const searchInput = page.locator('#twotabsearchtextbox');
-        const searchButton = page.locator('.nav-search-submit');
+  await test.step('Navigate to the main screen of amazon.com', async () => {
+    await homePage.navegatTo();
+  })
 
-        await expect(logoElement).toBeVisible();
-        await expect(searchInput).toBeVisible();
-        await expect(searchButton).toBeVisible();
+  await test.step('Main screen of Amazon is displayed', async () => {
+    await homePage.validateHomePage()
+  })
+  
+  await test.step(`Access the  ${homePage.ObjectsPage.ProductTarget}  product page.`, async () => {
+    await homePage.clickBoxResultAfterSearch(homePage.ObjectsPage.ProductTarget)
+  })
 
-    })
+  await test.step(`Validate the product page.`, async () => {
+    const descProduct = "Uma sociedade secreta, traiçoeira e liderada por famílias ricas e influentes assombra os cidadãos de Gotham City e coloca em risco a segurança da cidade e do próprio Batman. A Corte das Corujas, há muito escondida sob a sombras do submundo, vai mostrar suas garras novamente, e desta vez, da maneira mais impiedosa possível. Um romance original de Greg Cox, autor best-seller de diversas novelizações de filmes, entre as quais Batman – O Cavaleiro das Trevas Ressurge." 
+    await productPage.validateProductPage(homePage.ObjectsPage.ProductTarget,descProduct )
+    await productPage.clickAddCart()
+  })
+  
+  await test.step(`Validate the product in the cart.`, async () => {
+    await cartPage.validateFirstCart()
+    await cartPage.validateSecondCart(homePage.ObjectsPage.ProductTarget)
+  })
 
-})
+});
