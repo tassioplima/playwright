@@ -63,7 +63,3 @@ jobs:
       - name: Get Deployment URL
         run: echo "::set-output name=deployment_url::https://${{ github.repository_owner }}.github.io/${{ github.repository_name }}/playwright-report/"
         id: deployment_url
-
-      # Print the URL in the logs
-      - name: Print Deployment URL
-        run: echo "Deployment URL: ${{ needs.deploy.outputs.deployment_url }}"
