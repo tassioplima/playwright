@@ -60,9 +60,3 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
-
-      - name: Get Deployment URL
-        uses: dorshinar/get-deployment-url@v1.0.7
-        timeout-minutes: 5
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
