@@ -7,7 +7,7 @@ on:
     branches: [main, master]
 
 permissions:
-  pages: write      
+  pages: write
   id-token: write
 
 jobs:
@@ -19,15 +19,6 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Cache Playwright binaries
-        uses: actions/cache@v3
-        with:
-          path: |
-            ~/.cache/ms-playwright
-          key: playwright-${{ runner.os }}-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            playwright-${{ runner.os }}-
-
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
@@ -38,9 +29,6 @@ jobs:
 
       - name: Install Playwright Browsers
         run: npx playwright install --with-deps
-        if: steps.playwright-cache.outputs.cache-hit != 'true'
-      - run: npx playwright install-deps
-        if: steps.playwright-cache.outputs.cache-hit != 'true'
 
       - name: Run Playwright tests
         run: npx playwright test
@@ -52,6 +40,10 @@ jobs:
           path: playwright-report/
           retention-days: 30
 
+  deploy:
+    timeout-minutes: 60
+    runs-on: ubuntu-latest
+    steps:
       - name: Setup Pages
         uses: actions/configure-pages@v4
 
