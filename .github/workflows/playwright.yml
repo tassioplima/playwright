@@ -63,3 +63,6 @@ jobs:
 
       - name: Get Deployment URL
         uses: dorshinar/get-deployment-url@v1.0.7
+        timeout-minutes: 5
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
