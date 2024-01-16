@@ -5,6 +5,7 @@ const { AmazonHomePage } = require("../pages/homePageAmazon")
 const HomePage = new AmazonHomePage()
 
 test(`Successfully Search for ${HomePage.ObjectsPage.ProductTarget} on Amazon`, async ({ page }) => {
+    
   global.page = page
 
   await test.step('Navigate to the main screen of amazon.com', async () => {
