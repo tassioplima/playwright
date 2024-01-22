@@ -3,7 +3,7 @@
 [![CI](https://github.com/tassioplima/playwright/actions/workflows/playwright.yml/badge.svg)](https://github.com/tassioplima/playwright/actions)
 [![Report](https://img.shields.io/badge/Playwright-deployed-yellowgreen)](https://tassioplima.github.io/playwright/)
 
-This repo is used to run various testing scenarios with [Playwright](https://playwright.dev/) 🎭 with Node.js.
+This repo is used to run some testing scenarios with [Playwright](https://playwright.dev/) 🎭 with Node.js.
 
 ### Install dependencies
 
